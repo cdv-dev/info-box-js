@@ -1,0 +1,110 @@
+
+/*Box background*/
+.box {
+    width: 323px;
+    height: 337px;
+    background: url("../img/comp_plate_graybasic.png") no-repeat;
+}
+
+/*Product header text style*/
+.box .product-header {
+    color: #FF6200;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/*Product body text style*/
+.box .product-body {
+    font-size: 10px;
+}
+
+/*Details link style*/
+.box .product-details-link {
+    font-size: 10px;
+}
+
+.box .product-details-link a {
+    color: #FF6200;
+}
+
+.box .product-details-link a:hover {
+    color: #000;
+}
+
+/*for debugging*/
+/*
+.box .product-promo {
+    width: 312px;
+    height: 200px;
+    background: url("../img/comp_plate_promo1.png") no-repeat;
+}
+*/
+
+/*Buttons text style*/
+
+.box .button .text {
+    color: #aeaeae;
+    font-size: 12px;
+}
+
+.box .button.find .text {
+    color: #FF6200;
+}
+
+.box a:hover .button .text {
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+}
+
+/*Buttons background*/
+.box .button.prev{
+    background-image: url("../img/button_bg_white_left.png");
+}
+
+.box a:hover .button.prev{
+    background-image: url("../img/button_bg_orange_left.png");
+}
+
+.box .button.next {
+    background-image: url("../img/button_bg_white_right.png");
+}
+
+.box a:hover .button.next {
+    background-image: url("../img/button_bg_orange_right.png");
+}
+
+.box .button.find {
+    background-image: url("../img/button_bg_white_right.png");
+}
+
+.box a:hover .button.find {
+    background-image: url("../img/button_bg_orange_right.png");
+}
+
+.box .button.prev .arrow {
+     background-image: url("../img/btn_ic_gray_left.png");
+ }
+
+.box a:hover .button.prev .arrow {
+    background-image: url("../img/btn_ic_brn_left.png");
+}
+
+.box .button.next .arrow{
+    background-image: url("../img/btn_ic_gray_right.png");
+}
+
+.box a:hover .button.next .arrow{
+    background-image: url("../img/btn_ic_brn_right.png");
+}
+
+.box .button.find .arrow {
+   background-image: url("../img/arrowSide.png");
+}
+
+.box a:hover .button.find .arrow {
+   background-image: url("../img/arrowSide.png");
+}
+
+
+
+
