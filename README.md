@@ -14,7 +14,7 @@
         // Settings.setSkinCssPath(url) - путь к css-файлу для изменения скина блока (если не задан, по умолчанию  "src/css/box.skin.css" )
         // Settings.setProductDetailsPath(url) - путь к JSON-данным (если не задан, по умолчанию "src/info_box.json")
         // Settings.setImagesPath(url) - путь к каталогу с графикой (если не задан, по умолчанию "src/img")
-        infoBoxSettings = new infoBox.Settings;
+        var infoBoxSettings = new infoBox.Settings;
         //первый параметр - id блока на странице, в который будет вставлен Info-box
         infoBox.addTo("info-box", infoBoxSettings);
      </script>
