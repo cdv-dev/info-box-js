@@ -116,6 +116,10 @@ var infoBox = (function () {
     };
 
     var getPromoBg = function(){
+        //IE don`t understand location.origin
+        if (!location.origin) {
+            location.origin = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
+        }
         return "url(" + location.origin + location.pathname.replace(/[\/][a-zA-Z0-9]+[.][a-zA-Z#?_-]+/g, "") + "/" + boxSettings.getImagesPath() + "/" + boxSettings.jsonData[iProductIndex].img + ")"
     };
 
@@ -269,13 +273,13 @@ var infoBox = (function () {
 
         //skin styles
         var oLink = document.createElement("link");
-        oLink.setAttribute("rel", "stylesheet");
+        oLink.rel = "stylesheet";
         oLink.href = oSettings.getSkinCssPath();
         oHead.appendChild(oLink);
 
         //check that styles is already available
         for (var i = 0, j = oStyles.length; i < j; i++) {
-            var id = oStyles[i].getAttribute("id");
+            var id = oStyles[i].id;
             if (id !== null) {
                 if (id === "info-box") {
                     bStyle = true;
@@ -290,7 +294,7 @@ var infoBox = (function () {
         //creating styles
         var styles = document.createElement("style");
         styles.type = "text/css";
-        styles.setAttribute("id", "info-box");
+        styles.id = "info-box";
 
         var cssRules = ".box {" +
                               "display: inline-block;" +
@@ -419,6 +423,34 @@ var infoBox = (function () {
     };
 
     /**
+     * Method for creating single tag
+     * @param strTagName - tag
+     * @param oAttr - attributes
+     */
+    var createHtmlTag = function(strTagName, oAttr) {
+        var oTag = document.createElement(strTagName);
+
+        if (oAttr !== null && typeof oAttr === "object") {
+            for (var key in oAttr){
+                if (oAttr.hasOwnProperty(key)) {
+                    if (typeof oAttr[key] === "object") {
+                        var obj = oAttr[key];
+                        for (var param in obj) {
+                            if (obj.hasOwnProperty(param)) {
+                                oTag[key][param] = obj[param];
+                            }
+                        }
+                    } else {
+                        oTag[key] = oAttr[key];
+                    }
+                }
+            }
+        }
+
+        return oTag;
+    };
+
+    /**
      * Method for creating one button
      *
      * @param strClassName
@@ -429,16 +461,12 @@ var infoBox = (function () {
     var createButton = function(strClassName, strText, strHref) {
         var oSpan, oButton, oDiv;
 
-        oButton = document.createElement("a");
-        oButton.href = strHref;
-        oDiv = document.createElement("div");
-        oDiv.className = strClassName;
-        oSpan = document.createElement("span");
-        oSpan.className = "arrow";
+        oButton = createHtmlTag("a", {href : strHref});
+        oDiv = createHtmlTag("div", {className : strClassName});
+        oSpan = createHtmlTag("span", {className : "arrow"});
         oSpan.innerHTML = "&#160;";
         oDiv.appendChild(oSpan);
-        oSpan = document.createElement("span");
-        oSpan.className = "text";
+        oSpan = createHtmlTag("span", {className : "text"});
         oSpan.innerHTML = strText;
         oDiv.appendChild(oSpan);
         oButton.appendChild(oDiv);
@@ -468,63 +496,66 @@ var infoBox = (function () {
 
         oParent.className = "box";
 
-        var oContent = document.createElement("div");
-        oContent.className = "content";
+        var oContent = createHtmlTag("div", {className : "content"});
 
-        var oProductPromo = document.createElement("div");
-        oProductPromo.setAttribute("id", elements.idProductPromo);
-        oProductPromo.className = "product-promo";
-        oProductPromo.style.backgroundImage = getPromoBg();
-        oContent.appendChild(oProductPromo);
+        var oDiv;
+        oDiv = createHtmlTag("div", {
+            id    : elements.idProductPromo,
+            className : "product-promo",
+            style : {
+                backgroundImage : getPromoBg()
+            }
+        });
+        oContent.appendChild(oDiv);
 
-        var oProductText = document.createElement("div");
-        oProductText.setAttribute("id", "product-text");
+        var oProductText = createHtmlTag("div", {id : "product-text"});
 
         //product header
-        var oProductHeader = document.createElement("div");
-        oProductHeader.setAttribute("id", elements.idProductHeader);
-        oProductHeader.className = "product-header";
-        oProductHeader.innerHTML = jsonData[iProductIndex].title;
-
-        oProductText.appendChild(oProductHeader);
+        oDiv = createHtmlTag("div", {
+            id : elements.idProductHeader,
+            className : "product-header"
+        });
+        oDiv.innerHTML = jsonData[iProductIndex].title;
+        oProductText.appendChild(oDiv);
 
         //product body
-        var oProductBody = document.createElement("div");
-        oProductBody.setAttribute("id", elements.idProductBody);
-        oProductBody.className = "product-body";
-        var p = document.createElement("p");
-        p.setAttribute("id", "product-body-main");
+        oDiv = createHtmlTag("div", {
+           id : elements.idProductBody,
+           className : "product-body"
+        });
+
+        var p;
+        p = createHtmlTag("p", {id : "product-body-main"});
         p.innerHTML = jsonData[iProductIndex].description;
-        oProductBody.appendChild(p);
+        oDiv.appendChild(p);
 
-        p = document.createElement("p");
-        p.setAttribute("id", "product-body-sub");
-        p.className = "sub-text";
+        p = createHtmlTag("p", {
+            id : "product-body-sub",
+            className : "sub-text"
+        });
         p.innerHTML = jsonData[iProductIndex].note;
-        oProductBody.appendChild(p);
 
-        oProductText.appendChild(oProductBody);
+        oDiv.appendChild(p);
+        oProductText.appendChild(oDiv);
 
         //product details link
-        var oProductDetails = document.createElement("div");
-        oProductDetails.setAttribute("id", elements.idProductDetails);
-        oProductDetails.className = "product-details-link";
-        addEvent(oProductDetails, "click", detailsShowHide);
+        oDiv = createHtmlTag("div", {
+           id : elements.idProductDetails,
+           className : "product-details-link"
+        });
+        addEvent(oDiv, "click", detailsShowHide);
 
-        var a = document.createElement("a");
-        a.href = "#";
-        var span = document.createElement("span");
-        span.setAttribute("id", "details-label");
+        var a = createHtmlTag("a", {href : "#"});
+        var span = createHtmlTag("span", {id : "details-label"});
         span.innerHTML = "show details";
         a.appendChild(span);
-        oProductDetails.appendChild(a);
+        oDiv.appendChild(a);
 
-        oProductText.appendChild(oProductDetails);
+        oProductText.appendChild(oDiv);
         oContent.appendChild(oProductText);
 
         //buttons
-        var oButtonsWrapper = document.createElement("div");
-        oButtonsWrapper.className = "buttons-wrapper";
+        var oButtonsWrapper = createHtmlTag("div", {className : "buttons-wrapper"});
 
         //prev button
         var oPrevButton = createButton("button prev", lres.btnPrev, "#");
