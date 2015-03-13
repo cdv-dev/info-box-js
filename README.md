@@ -10,6 +10,7 @@
      <!-- модуль -->
      <script type="text/javascript" src="src/js/infobox.creator.js"></script>
      <script>
+     (function(){
         // настройки модуля:
         // Settings.setSkinCssPath(url) - путь к css-файлу для изменения скина блока (если не задан, по умолчанию  "src/css/box.skin.css" )
         // Settings.setProductDetailsPath(url) - путь к JSON-данным (если не задан, по умолчанию "src/info_box.json")
@@ -17,6 +18,7 @@
         var infoBoxSettings = new infoBox.Settings;
         //первый параметр - id блока на странице, в который будет вставлен Info-box
         infoBox.addTo("info-box", infoBoxSettings);
+     })();
      </script>
   </body>
   ```

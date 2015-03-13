@@ -19,8 +19,10 @@
 <script type="text/javascript" src="src/js/infobox.creator.js"></script>
 
 <script>
-    var infoBoxSettings = new infoBox.Settings;
-    infoBox.addTo("info-box", infoBoxSettings);
+    (function(){
+        var infoBoxSettings = new infoBox.Settings;
+        infoBox.addTo("info-box", infoBoxSettings);
+    })();
 </script>
 </body>
 </html>
